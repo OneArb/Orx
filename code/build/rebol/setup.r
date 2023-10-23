@@ -5,6 +5,8 @@ REBOL [
   file:         %setup.r
 ]
 
+quote: {^"}
+
 ; Default settings
 tag:            <version>
 hosts:          [[{https://orx-project.org/extern/} tag {.zip}] [{https://codeload.github.com/orx/orx-extern/zip/} tag] [{https://orx-mirror.0ok.org/} tag {.zip}]]
@@ -161,7 +163,7 @@ either skip-env [
       if any [mandatory exists? env-file] [
         parse env-content: any [attempt [to-string read env-file] copy {}] [
           thru env-prefix start: [to newline | to end] stop: (change/part start env-path stop)
-        | to end start: (insert start rejoin [newline env-prefix env-path newline])
+        | to end start: (insert start rejoin [newline env-prefix quote env-path quote newline])
         ]
         attempt [write env-file env-content]
       ]
